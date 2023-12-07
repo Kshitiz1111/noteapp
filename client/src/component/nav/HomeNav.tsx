@@ -1,7 +1,7 @@
 import React from "react";
 import { FaBars, FaUserCircle, FaBell } from "react-icons/fa";
 import SideNav from "./SideNav";
-import { toggle } from "../../features/Toggle";
+import { toggle } from "../../features/SliceToggle";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const HomeNav = () => {

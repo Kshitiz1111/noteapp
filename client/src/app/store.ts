@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import toggleNav from "../features/Toggle";
+import toggleNav from "../features/SliceToggle";
+import Auth from "../features/userAuth/SliceAuth";
 
 export const store = configureStore({
   reducer: {
     toggleStatus: toggleNav,
+    userAuth: Auth,
   },
 });
 

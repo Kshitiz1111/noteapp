@@ -2,7 +2,7 @@ import React from "react";
 import { FaAngleLeft, FaBell } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { toggle } from "../../../features/Toggle";
+import { toggle } from "../../../features/SliceToggle";
 import Search from "../../../features/search/Search";
 
 const SidePanelNav = () => {
