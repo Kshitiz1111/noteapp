@@ -11,4 +11,19 @@ const pool: Pool = new Pool({
   port: Number(process.env.DB_PORT),
 });
 
+const checkConnection = async () => {
+  try {
+    const client = await pool.connect();
+    await client.query("SELECT 1"); // Simple query to check connection
+    client.release();
+    return 1;
+    console.log("Database is connected");
+  } catch (error) {
+    return 0;
+    console.error(error);
+    console.error("Database connection failed");
+  }
+};
+
 export default pool;
+export { checkConnection };

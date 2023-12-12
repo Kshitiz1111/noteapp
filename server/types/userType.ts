@@ -1,6 +1,6 @@
 export type userInfoType = {
-  name?: string;
+  id: string;
+  name: string;
   email: string;
-  pwd: string;
-  role: "ADMIN" | "USER" | undefined;
+  pwd?: string;
 };
