@@ -18,7 +18,7 @@ const initialState: userObj = {
   role: undefined,
 };
 
-export const Auth = createSlice({
+export const Auth: any = createSlice({
   name: "userAuthentication",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,

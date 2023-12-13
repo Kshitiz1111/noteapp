@@ -16,12 +16,12 @@ const checkConnection = async () => {
     const client = await pool.connect();
     await client.query("SELECT 1"); // Simple query to check connection
     client.release();
-    return 1;
     console.log("Database is connected");
+    return 1;
   } catch (error) {
-    return 0;
     console.error(error);
     console.error("Database connection failed");
+    return 0;
   }
 };
 

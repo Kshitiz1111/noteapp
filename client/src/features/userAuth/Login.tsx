@@ -13,7 +13,7 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAuth } from "./SliceAuth";
 
 const Login = () => {
@@ -21,8 +21,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const getAuth = useAppSelector((state) => state.userAuth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setErrMsg("");
@@ -40,32 +42,40 @@ const Login = () => {
         }
       );
       console.log(JSON.stringify(response.data));
-      const accessToken: string = response?.data?.accessToken;
-      const role: string | undefined = response?.data?.role;
+      // const accessToken: string = response?.data?.accessToken;
+      // const role: string | undefined = response?.data?.role;
 
-      dispatch(
-        setAuth({
-          name: name,
-          pwd: password,
-          accessToken: accessToken,
-          role: role,
-        })
-      );
-
-      setName("");
-      setPassword("");
-      setSuccess(true);
+      // dispatch(
+      //   setAuth({
+      //     name: name,
+      //     pwd: password,
+      //     accessToken: accessToken,
+      //     role: role,
+      //   })
+      // );
+      if (response.status === 200) {
+        setSuccessMsg(response.data.success);
+        console.log(successMsg);
+        setName("");
+        setPassword("");
+        setSuccess(true);
+        navigate("/");
+      }
     } catch (err: any) {
       if (!err?.response) {
         setErrMsg("No server response");
+        setSuccessMsg("");
       } else if (err.response?.status === 400) {
+        setSuccessMsg("");
         setErrMsg("missing username or password");
       } else if (err.response?.status === 401) {
         // handle internal server errors
         setErrMsg("Unauthorized");
+        setSuccessMsg("");
       } else {
         // handle other errors
         setErrMsg("Unknown error");
+        setSuccessMsg("");
       }
     }
   };
@@ -82,6 +92,18 @@ const Login = () => {
             role="alert"
           >
             <span className="block sm:inline">{errMsg}</span>
+          </div>
+        </div>
+
+        <div
+          aria-live="assertive"
+          className={successMsg == "" ? "hidden" : "block"}
+        >
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline">{successMsg}</span>
           </div>
         </div>
         <CssBaseline />

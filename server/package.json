@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc && nodemon ./build/index.js"
-    
   },
   "keywords": [],
   "author": "",
@@ -14,11 +13,13 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.5",
+    "@types/cookie-parser": "^1.4.6",
     "@types/cors": "^2.8.16",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/pg": "^8.10.9",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "D": "^1.0.0",
     "dotenv": "^16.3.1",

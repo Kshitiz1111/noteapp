@@ -15,7 +15,7 @@ class User {
     this.userObj.email = obj.email;
   }
 
-  async register() {
+  async register(hashpwd: string) {
     try {
       const checkDbConnection = await checkConnection();
       // console.log(checkConnection);
@@ -32,13 +32,13 @@ class User {
 
         if (!tableExistsResult.rows[0].exists) {
           // Create users table
-          const createTableQuery = `CREATE TABLE users (u_id VARCHAR(255) PRIMARY KEY, u_name VARCHAR(255) NOT NULL, u_email VARCHAR(255) NOT NULL)`;
+          const createTableQuery = `CREATE TABLE users (u_id VARCHAR(255) PRIMARY KEY, u_name VARCHAR(255) NOT NULL, u_email VARCHAR(255) NOT NULL, u_pwd VARCHAR(255) NOT NULL, u_rftk VARCHAR(255))`;
           console.log("kdk model");
           const a = await client.query(createTableQuery);
         }
 
         // Insert data into users table
-        const insertDataQuery = `insert into users(u_id, u_name, u_email) values('${this.userObj.id}', '${this.userObj.name}', '${this.userObj.email}')`;
+        const insertDataQuery = `insert into users(u_id, u_name, u_email, u_pwd) values('${this.userObj.id}', '${this.userObj.name}', '${this.userObj.email}', '${hashpwd}')`;
 
         const insertDataResult = await client.query(insertDataQuery);
         console.log(insertDataResult);
@@ -77,6 +77,21 @@ class User {
 
       // client.release();
       return usersResult.rows; // Array of user objects
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  async addRftk(id: string, rftk: string) {
+    try {
+      const client = await pool.connect();
+
+      // Fetch users
+      const usersQuery = `UPDATE users SET u_rftk = '${rftk}' WHERE u_id = '${id}' RETURNING *`;
+      const usersResult = await client.query(usersQuery);
+      console.log(usersResult);
+      return usersResult; // Array of user objects
     } catch (error) {
       console.error(error);
       return [];
