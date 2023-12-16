@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { corsOptions } from "./Config/corsOptions";
 //all routers object in between
 import userRouter from "./Router/user";
@@ -16,6 +17,8 @@ app.use(cors(corsOptions));
 app.use(logger("dev"));
 
 app.use(express.json()); //parse json bodies in the request object
+
+app.use(cookieParser()); //middleware for cookies
 
 //routers
 app.use("/api/v1/user", userRouter);

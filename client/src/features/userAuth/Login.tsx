@@ -13,23 +13,23 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setAuth } from "./SliceAuth";
 
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const getAuth = useAppSelector((state) => state.userAuth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     setErrMsg("");
   }, [name, password]);
-
   const handleLogin = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
@@ -41,25 +41,22 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response.data));
-      // const accessToken: string = response?.data?.accessToken;
-      // const role: string | undefined = response?.data?.role;
 
-      // dispatch(
-      //   setAuth({
-      //     name: name,
-      //     pwd: password,
-      //     accessToken: accessToken,
-      //     role: role,
-      //   })
-      // );
+      const accessToken: string = response?.data?.accessToken;
+      // const role: string | undefined = response?.data?.role;
+      dispatch(
+        setAuth({
+          name: name,
+          // pwd: password,
+          accessToken: accessToken,
+          // role: role,
+        })
+      );
       if (response.status === 200) {
         setSuccessMsg(response.data.success);
-        console.log(successMsg);
         setName("");
         setPassword("");
-        setSuccess(true);
-        navigate("/");
+        navigate(from, { replace: true });
       }
     } catch (err: any) {
       if (!err?.response) {
@@ -92,18 +89,6 @@ const Login = () => {
             role="alert"
           >
             <span className="block sm:inline">{errMsg}</span>
-          </div>
-        </div>
-
-        <div
-          aria-live="assertive"
-          className={successMsg == "" ? "hidden" : "block"}
-        >
-          <div
-            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span className="block sm:inline">{successMsg}</span>
           </div>
         </div>
         <CssBaseline />

@@ -9,7 +9,6 @@ class User {
   };
 
   constructor(obj: userInfoType) {
-    console.log(obj);
     this.userObj.id = obj.id;
     this.userObj.name = obj.name;
     this.userObj.email = obj.email;
@@ -33,7 +32,6 @@ class User {
         if (!tableExistsResult.rows[0].exists) {
           // Create users table
           const createTableQuery = `CREATE TABLE users (u_id VARCHAR(255) PRIMARY KEY, u_name VARCHAR(255) NOT NULL, u_email VARCHAR(255) NOT NULL, u_pwd VARCHAR(255) NOT NULL, u_rftk VARCHAR(255))`;
-          console.log("kdk model");
           const a = await client.query(createTableQuery);
         }
 
@@ -41,7 +39,6 @@ class User {
         const insertDataQuery = `insert into users(u_id, u_name, u_email, u_pwd) values('${this.userObj.id}', '${this.userObj.name}', '${this.userObj.email}', '${hashpwd}')`;
 
         const insertDataResult = await client.query(insertDataQuery);
-        console.log(insertDataResult);
         // client.release();
         return insertDataResult.rows[0]; // Inserted user data
       } else {
@@ -87,10 +84,23 @@ class User {
     try {
       const client = await pool.connect();
 
-      // Fetch users
+      // update user
       const usersQuery = `UPDATE users SET u_rftk = '${rftk}' WHERE u_id = '${id}' RETURNING *`;
       const usersResult = await client.query(usersQuery);
-      console.log(usersResult);
+      return usersResult; // Array of user objects
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  async delRftk(id: string) {
+    try {
+      const client = await pool.connect();
+
+      // update user
+      const usersQuery = `UPDATE users SET u_rftk = ${null} WHERE u_id = '${id}' RETURNING *`;
+      const usersResult = await client.query(usersQuery);
       return usersResult; // Array of user objects
     } catch (error) {
       console.error(error);

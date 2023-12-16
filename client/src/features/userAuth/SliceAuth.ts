@@ -4,21 +4,21 @@ import type { RootState } from "../../app/store";
 
 // Define a type for the slice state
 interface userObj {
-  name?: string;
-  pwd: string;
-  accessToken: string;
-  role: "ADMIN" | "USER" | undefined;
+  name?: string | null;
+  // pwd: string;
+  accessToken: string | null;
+  // role: "ADMIN" | "USER" | undefined;
 }
 
 // Define the initial state using that type
 const initialState: userObj = {
   name: "",
-  pwd: "",
+  // pwd: "",
   accessToken: "",
-  role: undefined,
+  // role: undefined,
 };
 
-export const Auth: any = createSlice({
+export const Auth = createSlice({
   name: "userAuthentication",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
@@ -26,11 +26,11 @@ export const Auth: any = createSlice({
     setAuth: (state, action) => {
       const { name, pwd, accessToken, role } = action.payload;
       state.name = name;
-      state.pwd = pwd;
+      // state.pwd = pwd;
       state.accessToken = accessToken;
-      state.role = role;
+      // state.role = role;
 
-      console.log(JSON.stringify(state));
+      console.log(`global userAuth: ${JSON.stringify(state)}`);
     },
   },
 });
