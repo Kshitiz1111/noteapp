@@ -4,14 +4,23 @@ import ReadWriteContainer from "../component/ActiveReadWrite/ReadWriteContainer"
 import RecentTab from "../features/recent/RecentTab";
 import { FaSistrix } from "react-icons/fa";
 import CreateNote from "../component/nav/CreateNoteBtn";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  // const viewUsers = () => navigate("/admin");
   return (
     <div>
       <div className="rounded-full fixed bottom-5 right-5 w-fit z-10 shadow-md">
         <CreateNote></CreateNote>
       </div>
-
+      {/* <button
+        className="rounded-lg px-4 py-2 text-lg font-medium text-white bg-blue-500 hover:bg-blue-600"
+        onClick={viewUsers}
+      >
+        view users
+      </button> */}
       <HomeNav />
       <div className="px-1 py-6 flex ">
         <div className="w-full overflow-x-scroll">

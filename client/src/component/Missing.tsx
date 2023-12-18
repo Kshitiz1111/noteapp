@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Missing = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate("/");
-  };
+  const goBack = () => navigate(-1);
   return (
     <Box
       sx={{
@@ -25,8 +23,8 @@ const Missing = () => {
             <Typography variant="h6">
               The page you’re looking for doesn’t exist.
             </Typography>
-            <Button variant="contained" onClick={handleClick}>
-              Back Home
+            <Button variant="contained" onClick={goBack}>
+              Go Back
             </Button>
           </Grid>
           <Grid xs={6}>

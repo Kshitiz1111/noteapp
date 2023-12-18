@@ -7,6 +7,8 @@ import Register from "./features/userAuth/Register";
 import Layout from "./component/Layout";
 import Missing from "./component/Missing";
 import AuthRequire from "./component/AuthRequired";
+import Temp from "./component/Temp";
+import PersistLogin from "./component/PersistLogin";
 
 function App() {
   return (
@@ -17,9 +19,16 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
 
           {/* all the protected routes */}
-          <Route element={<AuthRequire />}>
-            <Route path="/" element={<HomePage />}></Route>
-            <Route path="/addnew" element={<NoteContainer />}></Route>
+          <Route element={<PersistLogin />}>
+            <Route element={<AuthRequire />}>
+              <Route path="/" element={<HomePage />}></Route>
+            </Route>
+            <Route element={<AuthRequire />}>
+              <Route path="/addnew" element={<NoteContainer />}></Route>
+            </Route>
+            <Route element={<AuthRequire />}>
+              <Route path="/admin" element={<Temp />}></Route>
+            </Route>
           </Route>
 
           {/* catch all path */}

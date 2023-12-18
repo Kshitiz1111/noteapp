@@ -4,10 +4,8 @@ import SideNav from "./SideNav";
 import { toggle } from "../../features/SliceToggle";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Popover from "@mui/material/Popover";
-import Button from "@mui/material/Button";
-import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
-import { setAuth } from "../../features/userAuth/SliceAuth";
+import { useLogout } from "../../hooks/useLogout";
 
 const HomeNav = () => {
   const navToggleStatus = useAppSelector((state) => state.toggleStatus.status);
@@ -24,23 +22,9 @@ const HomeNav = () => {
     setAnchorEl(null);
   };
 
+  const logout = useLogout();
   const handleLogout = async () => {
-    try {
-      const response = await axios.get("/api/v1/user/logout");
-      if (response.status === 204) {
-        dispatch(
-          setAuth({
-            name: null,
-            accessToken: null,
-          })
-        );
-        navigate("/login");
-      } else {
-        console.log("network error");
-      }
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    await logout();
   };
 
   const open = Boolean(anchorEl);

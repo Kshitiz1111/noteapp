@@ -2,7 +2,6 @@ import { LockOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import axios from "../../api/axios";
-
 import {
   Container,
   CssBaseline,
@@ -15,6 +14,7 @@ import {
 } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setAuth } from "./SliceAuth";
+// import { setTrust } from "../SliceTrustThisDevice";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -22,7 +22,9 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const getAuth = useAppSelector((state) => state.userAuth);
+  // const trustDevice = useAppSelector((state) => state.deviceTrusted);
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -76,6 +78,18 @@ const Login = () => {
       }
     }
   };
+
+  // console.log(`login trustInd: ${trustDevice.trustIndicator}`);
+
+  //toggle persist
+  // const toggleTrust = () => {
+  //   trustDevice.trustIndicator === ""
+  //     ? dispatch(setTrust("persist"))
+  //     : dispatch(setTrust(""));
+  // };
+  // useEffect(() => {
+  //   localStorage.setItem("deviceTrusted", trustDevice.trustIndicator);
+  // }, [trustDevice]);
 
   return (
     <>
@@ -131,6 +145,24 @@ const Login = () => {
                 setPassword(e.target.value);
               }}
             />
+            {/* <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                name="rememberMe"
+                checked={
+                  trustDevice.trustIndicator === "persist" ? true : false
+                }
+                onChange={toggleTrust}
+                className="rounded mr-2 text-gray-700 bg-gray-300 border-gray-300 focus:ring-2 focus:ring-blue-500 ring-opacity-50 h-4 w-4"
+              />
+              <label
+                htmlFor="rememberMe"
+                className="text-sm font-medium text-gray-700"
+              >
+                Remember me
+              </label>
+            </div> */}
 
             <Button
               fullWidth

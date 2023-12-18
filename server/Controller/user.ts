@@ -72,7 +72,7 @@ export const loginUserController: RequestHandler = async (req, res) => {
       const accessToken = sign(
         { username: foundUser.u_name },
         String(process.env.ACCESS_TOKEN_SECRET),
-        { expiresIn: "30s" }
+        { expiresIn: "10s" }
       );
       const refreshToken = sign(
         { username: foundUser.u_name },
@@ -83,7 +83,7 @@ export const loginUserController: RequestHandler = async (req, res) => {
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         sameSite: "none",
-        // secure: true,
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
       return res.json({ accessToken });
@@ -107,7 +107,9 @@ export const refreshTokenController: RequestHandler = async (req, res) => {
   let reqObj: userInfoType = req.body;
   let user = new User(reqObj);
   const cookie = req.cookies;
-  console.log(`this is cookie(logout): ${JSON.stringify(req.cookies)}`);
+  console.log(
+    `this is cookie( from refresh token): ${JSON.stringify(req.cookies)}`
+  );
 
   if (!cookie?.jwt) return res.sendStatus(401);
 
@@ -130,10 +132,10 @@ export const refreshTokenController: RequestHandler = async (req, res) => {
       const accessToken = sign(
         { username: decoded.username },
         process.env.ACCESS_TOKEN_SECRET ?? "",
-        { expiresIn: "30s" }
+        { expiresIn: "10s" }
       );
 
-      return res.json({ accessToken });
+      return res.json({ accessToken: accessToken, userName: foundUser.u_name });
     }
   );
 
@@ -165,8 +167,8 @@ export const logoutUserController: RequestHandler = async (req, res) => {
       res.clearCookie("jwt", {
         httpOnly: true,
         sameSite: "none",
-        // secure: true,
-        // maxAge: 24 * 60 * 60 * 1000,
+        secure: true,
+        maxAge: -1,
       });
       return res.sendStatus(204); //no content
     }
@@ -178,8 +180,8 @@ export const logoutUserController: RequestHandler = async (req, res) => {
     res.clearCookie("jwt", {
       httpOnly: true,
       sameSite: "none",
-      // secure: true,
-      // maxAge: 24 * 60 * 60 * 1000,
+      secure: true,
+      maxAge: -1,
     });
     return res.sendStatus(204); // resource updataed sucessfully
   } catch (error: any) {

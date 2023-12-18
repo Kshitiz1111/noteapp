@@ -12,9 +12,9 @@ interface userObj {
 
 // Define the initial state using that type
 const initialState: userObj = {
-  name: "",
+  name: null,
   // pwd: "",
-  accessToken: "",
+  accessToken: null,
   // role: undefined,
 };
 

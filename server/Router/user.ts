@@ -15,5 +15,6 @@ userRouter.route("/refreshtkn").get(refreshTokenController);
 userRouter.route("/logout").get(logoutUserController);
 
 userRouter.route("/login").post(loginUserController).get(verifyJWT, getUsers);
+userRouter.route("/getusers").get(verifyJWT, getUsers);
 
 export default userRouter;

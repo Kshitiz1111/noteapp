@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import toggleNav from "../features/SliceToggle";
 import Auth from "../features/userAuth/SliceAuth";
+// import TrustDevice from "../features/SliceTrustThisDevice";
 
 export const store = configureStore({
   reducer: {
     toggleStatus: toggleNav,
     userAuth: Auth,
+    // deviceTrusted: TrustDevice,
   },
 });
 
