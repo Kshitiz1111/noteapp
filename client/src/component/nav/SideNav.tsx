@@ -1,45 +1,60 @@
 import React from "react";
 import SidePanel from "./SidePanel/SidePanel";
 import CreateNote from "./CreateNoteBtn";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setActiveNote } from "../../features/SliceAddNote";
+import { useNavigate } from "react-router-dom";
+import { FaXmark } from "react-icons/fa6";
+import { toggle } from "../../features/SliceToggle";
 
 const SideNav = () => {
+  const notes = useAppSelector((state) => state.getNotes.notes);
+  const navToggleStatus = useAppSelector((state) => state.toggleStatus.status);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  function handleActiveNote(note: any) {
+    dispatch(setActiveNote({ type: "homenote", payload: note }));
+    navigate("/addnew");
+    dispatch(toggle(navToggleStatus));
+  }
+
   return (
     <div className="flex ">
       <div className="w-full h-screen sm:w-80 fixed top-0 left-0 bg-gray-600 py-4 z-10">
-        <h2 className="text-2xl font-bold text-gray-300 text-center py-1 ">
-          note
-        </h2>
-        <div className="">
-          <ul className=" text-lg font-semibold w-full">
-            <li className="w-full text-white hover:border-r-8 hover:border-gray-300 hover:bg-gray-500 pl-4 py-1 m-0 ">
-              <a href="./">MATH</a>
-            </li>
-            <li className="w-full text-white hover:border-r-8 hover:border-gray-300 hover:bg-gray-500  pl-4 py-1 m-0 ">
-              <a href="./">SCIENCE</a>
-            </li>
-            <li className="w-full text-white hover:border-r-8 hover:border-gray-300 hover:bg-gray-500  pl-4 py-1 m-0 ">
-              <a href="./">COMPUTER SCIENCE</a>
-            </li>
-            <li className="w-full text-white hover:border-r-8 hover:border-gray-300 hover:bg-gray-500  pl-4 py-1 m-0 ">
-              <a href="./">ART</a>
-            </li>
-            <li className="w-full text-white hover:border-r-8 hover:border-gray-300 hover:bg-gray-500  pl-4 py-1 m-0 ">
-              <a href="./">LANGUAGE</a>
-            </li>
-          </ul>
-          <hr className="my-4 w-3/4 m-auto" />
+        <div className="text-4xl flex justify-between px-4 py-2">
+          <span className="text-gray-400">notes</span>
+          <FaXmark onClick={() => dispatch(toggle(navToggleStatus))}></FaXmark>
+        </div>
+        <div className="flex bg-gray-600">
+          <div className="w-full p-2 flex flex-col">
+            {notes.length > 0 ? (
+              notes?.map((note: any) => (
+                <div
+                  className="w-full p-2 mb-2 bg-white rounded shadow"
+                  onClick={() => handleActiveNote(note)}
+                >
+                  <h2 className="text-xl font-bold">{note.title}</h2>
 
-          <div className="flex items-center space-x-2 p-2 ">
-            <p className="ml-4  text-gray-200 text-lx font-bold">
-              create new note
-            </p>
-            <CreateNote />
+                  <p className="text-sm text-gray-600">
+                    Last modified: {note.lastModified}
+                  </p>
+
+                  <p className="text-base text-gray-700 overflow-ellipsis overflow-hidden">
+                    {note.body}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>no notes found</p>
+            )}
           </div>
         </div>
       </div>
-      <div className="z-20">
+      {/* <div className="z-20">
         <SidePanel></SidePanel>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,15 +1,14 @@
-import React from 'react'
-import Write from './Write'
-import Read from './Read'
-
+import React from "react";
+import Write from "./Write";
+import Read from "./Read";
 
 const ReadWriteContainer = () => {
   return (
-    <div className='w-full p-6 flex gap-2 justify-evenly flex-wrap'>
+    <div className="w-full p-6">
       <Read></Read>
-      <Write></Write>
+      {/* <Write></Write> */}
     </div>
-  )
-}
+  );
+};
 
-export default ReadWriteContainer
+export default ReadWriteContainer;

@@ -39,7 +39,7 @@ class User {
         const insertDataQuery = `insert into users(u_id, u_name, u_email, u_pwd) values('${this.userObj.id}', '${this.userObj.name}', '${this.userObj.email}', '${hashpwd}')`;
 
         const insertDataResult = await client.query(insertDataQuery);
-        // client.release();
+        client.release();
         return insertDataResult.rows[0]; // Inserted user data
       } else {
         console.log("database not found");
@@ -53,26 +53,27 @@ class User {
   async getAllUser() {
     try {
       const client = await pool.connect();
-
+      console.log("aaa");
       // Check for table existence
       const tableExistsQuery = `SELECT EXISTS (
         SELECT FROM information_schema.tables
         WHERE table_schema = 'public'
         AND table_name = 'users'
       )`;
-
+      console.log("bbb");
       const tableExistsResult = await client.query(tableExistsQuery);
-
+      console.log("ccc");
       if (!tableExistsResult.rows[0].exists) {
         console.error('Table "users" does not exist.');
         return [];
       }
-
+      console.log("ddd");
       // Fetch users
       const usersQuery = `SELECT * FROM users`;
       const usersResult = await client.query(usersQuery);
-
-      // client.release();
+      console.log("eee");
+      console.log(usersResult.rows);
+      client.release();
       return usersResult.rows; // Array of user objects
     } catch (error) {
       console.error(error);
@@ -87,6 +88,7 @@ class User {
       // update user
       const usersQuery = `UPDATE users SET u_rftk = '${rftk}' WHERE u_id = '${id}' RETURNING *`;
       const usersResult = await client.query(usersQuery);
+      client.release();
       return usersResult; // Array of user objects
     } catch (error) {
       console.error(error);
@@ -101,6 +103,7 @@ class User {
       // update user
       const usersQuery = `UPDATE users SET u_rftk = ${null} WHERE u_id = '${id}' RETURNING *`;
       const usersResult = await client.query(usersQuery);
+      client.release();
       return usersResult; // Array of user objects
     } catch (error) {
       console.error(error);

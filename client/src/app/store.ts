@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import toggleNav from "../features/SliceToggle";
 import Auth from "../features/userAuth/SliceAuth";
+import AddNote from "../features/SliceAddNote";
 // import TrustDevice from "../features/SliceTrustThisDevice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     toggleStatus: toggleNav,
     userAuth: Auth,
     // deviceTrusted: TrustDevice,
+    getNotes: AddNote,
   },
 });
 

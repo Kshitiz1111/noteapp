@@ -40,7 +40,10 @@ export const registerUserController: RequestHandler = async (
       }
 
       result = await user.register(hashedPwd);
-      res.status(201).json({ success: `new user ${reqObj.name} created` });
+      //here
+      return res
+        .status(201)
+        .json({ success: `new user ${reqObj.name} created` });
     }
   } catch (error) {
     console.log(error);
@@ -90,7 +93,11 @@ export const loginUserController: RequestHandler = async (req, res) => {
     } else {
       return res.sendStatus(401); //unauthorized
     }
-  } catch (error) {}
+  } catch (error) {
+    //here
+    console.log(error);
+    return res.status(500).end();
+  }
 };
 
 export const getUsers: RequestHandler = async (req, res) => {
@@ -100,7 +107,11 @@ export const getUsers: RequestHandler = async (req, res) => {
 
     const existingUsers = await user.getAllUser();
     return res.json({ existingUsers });
-  } catch (error) {}
+  } catch (error) {
+    //here
+    console.log(error);
+    return res.status(500).end();
+  }
 };
 
 export const refreshTokenController: RequestHandler = async (req, res) => {
@@ -153,9 +164,10 @@ export const logoutUserController: RequestHandler = async (req, res) => {
 
     const cookie = req.cookies;
     console.log(`this is cookie(logout): ${JSON.stringify(req.cookies)}`);
+    //here return res.sendS..
     if (!cookie?.jwt) return res.sendStatus(204); //no content
     const refreshToken = cookie.jwt;
-
+    console.log("hhhh");
     //check if there is refresh token in db
     const existingUsers = await user.getAllUser();
     console.log(`existing users: ${JSON.stringify(existingUsers)}`);

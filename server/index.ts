@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { corsOptions } from "./Config/corsOptions";
 //all routers object in between
 import userRouter from "./Router/user";
+import noteRouter from "./Router/note";
 //all routers object in between
 
 const logger = require("morgan");
@@ -22,6 +23,7 @@ app.use(cookieParser()); //middleware for cookies
 
 //routers
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/note", noteRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);

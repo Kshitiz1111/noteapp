@@ -82,7 +82,7 @@ const Register = () => {
       );
 
       setSuccess(true);
-      if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         navigate("/login");
       }
     } catch (err: any) {

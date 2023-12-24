@@ -1,24 +1,80 @@
-import React from 'react'
+import React, { useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setActiveNote } from "../../features/SliceAddNote";
+import { useNavigate } from "react-router-dom";
 
 const Read = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  function handleActiveNote(note: any) {
+    dispatch(setActiveNote({ type: "homenote", payload: note }));
+    navigate("/addnew");
+  }
+
+  const activeNote = useAppSelector((state) => state.getNotes.activeNote);
+
+  const homeNotes = useAppSelector((state) =>
+    state.getNotes.notes?.slice(
+      0,
+      state.getNotes.notes?.length > 10 ? 10 : state.getNotes.notes?.length
+    )
+  );
+  useEffect(() => {
+    dispatch(setActiveNote({ type: "homenote", payload: activeNote }));
+  }, [activeNote?.body, activeNote?.title]);
+
   return (
-    <div className='sm:w-full lg:w-1/3 sm:m-1 relative bg-gray-300 p-4 rounded-xl'>
-      <FaCheckCircle className='absolute top-2 right-2 text-3xl text-gray-900'></FaCheckCircle>
-      <div className='mb-4'>
-        <div className='flex justify-between'>
-          <h2 className='text-xl font-bold'>Human Biology</h2>
-          <span className='text-sm mr-8 text-gray-600'>2hr ago</span>
+    <>
+      {activeNote !== null ? (
+        <div
+          className="sm:w-full lg:w-1/3 sm:mb-1 relative bg-gray-300 p-4 rounded-xl border-2 border-black"
+          onClick={() => handleActiveNote(activeNote)}
+        >
+          <FaCheckCircle className="absolute top-2 right-2 text-3xl text-gray-900"></FaCheckCircle>
+          <div className="mb-4">
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold">{activeNote?.title}</h2>
+              <div>
+                <span className="text-sm mr-8 text-gray-600">
+                  edited: {activeNote?.lastModified}
+                </span>
+              </div>
+            </div>
+            {/* <span className='text-xs text-gray-600'>science/medical/biology</span> */}
+          </div>
+          <div>
+            <p>{activeNote?.body}</p>
+          </div>
         </div>
-          <span className='text-xs text-gray-600'>science/medical/biology</span>
-      </div>
-      <div>
-        <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available
+      ) : (
+        homeNotes?.map((note) => (
+          <div
+            className="sm:w-full lg:w-1/3 sm:mb-1 mb-2 relative bg-gray-300 p-4 rounded-xl"
+            onClick={() => handleActiveNote(note)}
+          >
+            <FaCheckCircle className="absolute top-2 right-2 text-3xl text-gray-900"></FaCheckCircle>
+            <div className="mb-4">
+              <div className="flex justify-between">
+                <h2 className="text-xl font-bold">{note?.title}</h2>
+                <div>
+                  <span className="text-sm mr-8 text-gray-600">
+                    edited: {note?.lastModified}
+                  </span>
+                </div>
+              </div>
+              {/* <span className='text-xs text-gray-600'>science/medical/biology</span> */}
+            </div>
+            <div>
+              <p>{note?.body}</p>
+            </div>
+          </div>
+        ))
+      )}
+    </>
+  );
+};
 
-In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available</p>
-      </div>
-    </div>
-  )
-}
-
-export default Read
+export default Read;

@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeNav from "../component/nav/HomeNav";
 import ReadWriteContainer from "../component/ActiveReadWrite/ReadWriteContainer";
 import RecentTab from "../features/recent/RecentTab";
 import { FaSistrix } from "react-icons/fa";
 import CreateNote from "../component/nav/CreateNoteBtn";
 import { useNavigate } from "react-router-dom";
+import { insertSavedNotes } from "../features/SliceAddNote";
+import axios from "../api/axios";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector((state) => state.userAuth?.name);
+
+  const notes = useAppSelector((state) => state.getNotes.notes);
+
+  const getNotesFromServer = async () => {
+    try {
+      await axios
+        .get(`/api/v1/note/get/${loggedUser}`)
+        .then((response) => {
+          // console.log(response.data); // Access the response data
+          dispatch(insertSavedNotes({ note: response.data, user: loggedUser }));
+        })
+        .catch((error) => {
+          console.error(error); // Handle any errors
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getNotesFromServer();
+  }, [notes]);
 
   // const viewUsers = () => navigate("/admin");
   return (
