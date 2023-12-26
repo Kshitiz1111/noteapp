@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { FaCircleUser } from "react-icons/fa6";
 import { LockOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -128,8 +129,8 @@ const Register = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-            <LockOutlined />
+          <Avatar>
+            <FaCircleUser />
           </Avatar>
           <Typography variant="h5">Register</Typography>
           <Box sx={{ mt: 3 }}>
@@ -207,6 +208,7 @@ const Register = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={(e) => handleRegister(e)}
               disabled={!validName || !validPwd ? true : false}
+              style={{ background: "black" }}
             >
               Register
             </Button>

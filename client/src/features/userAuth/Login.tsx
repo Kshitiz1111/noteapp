@@ -2,6 +2,7 @@ import { LockOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import axios from "../../api/axios";
+import { FaCircleUser } from "react-icons/fa6";
 import {
   Container,
   CssBaseline,
@@ -114,8 +115,8 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-            <LockOutlined />
+          <Avatar>
+            <FaCircleUser />
           </Avatar>
           <Typography variant="h5">Login</Typography>
           <Box sx={{ mt: 1 }}>
@@ -169,6 +170,7 @@ const Login = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleLogin}
+              style={{ background: "black" }}
             >
               Login
             </Button>
