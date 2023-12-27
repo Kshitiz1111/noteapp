@@ -9,6 +9,8 @@ import { useLogout } from "../../hooks/useLogout";
 
 const HomeNav = () => {
   const navToggleStatus = useAppSelector((state) => state.toggleStatus.status);
+  const notifCount = useAppSelector((state) => state.getNotif.totalNotif);
+  const notifications = useAppSelector((state) => state.getNotif);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -30,6 +32,22 @@ const HomeNav = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const [anchorElNotif, setAnchorElNotif] =
+    React.useState<HTMLDivElement | null>(null);
+
+  const openNotif = Boolean(anchorElNotif);
+  const notifId = open ? "simple-notif-popover" : undefined;
+
+  const handleNotifClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorElNotif(event.currentTarget);
+    console.log("ldld");
+  };
+
+  const handleNotifClose = () => {
+    setAnchorElNotif(null);
+    console.log("kdk");
+  };
+
   return (
     <>
       <div style={{ display: navToggleStatus }}>
@@ -41,9 +59,53 @@ const HomeNav = () => {
         </div>
         <div>note</div>
         <div className="flex w-20 justify-between items-center">
-          <div className="">
+          <div
+            className="relative flex items-center justify-center cursor-pointer"
+            aria-describedby={notifId}
+            onClick={handleNotifClick}
+          >
+            {notifCount !== 0 ? (
+              <span className="absolute absolute top-0 left-0 -mt-3 -ml-3 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-bold">
+                {notifCount}
+              </span>
+            ) : (
+              <></>
+            )}
+
             <FaBell></FaBell>
           </div>
+          <Popover
+            id={notifId}
+            open={openNotif}
+            anchorEl={anchorElNotif}
+            onClose={handleNotifClose}
+            anchorOrigin={{
+              vertical: "center",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            {notifCount !== 0 ? (
+              <div className="rounded-lg overflow-hidden shadow-md bg-white">
+                <span className="text-sm px-4">select note form tabbar</span>
+                <ul className="divide-y divide-gray-200">
+                  {notifications.notifContent?.map((item) => (
+                    <li key={item.id} className="py-2 px-6 hover:bg-gray-100">
+                      <span className="block font-medium text-gray-900">
+                        {item.title}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="p-4">no notification</div>
+            )}
+          </Popover>
+
           <div className="text-3xl" aria-describedby={id} onClick={handleClick}>
             <FaUserCircle></FaUserCircle>
           </div>

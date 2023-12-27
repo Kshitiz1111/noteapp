@@ -6,14 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Read = () => {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
-
-  function handleActiveNote(note: any) {
-    dispatch(setActiveNote({ type: "homenote", payload: note }));
-    navigate("/addnew");
-  }
-
+  
   const activeNote = useAppSelector((state) => state.getNotes.activeNote);
 
   const homeNotes = useAppSelector((state) =>
@@ -22,9 +16,15 @@ const Read = () => {
       state.getNotes.notes?.length > 10 ? 10 : state.getNotes.notes?.length
     )
   );
-  useEffect(() => {
-    dispatch(setActiveNote({ type: "homenote", payload: activeNote }));
-  }, [activeNote?.body, activeNote?.title]);
+
+ 
+
+  function handleActiveNote(note: any) {
+    dispatch(setActiveNote({ type: "homenote", payload: note }));
+    navigate("/addnew");
+  }
+
+
 
   return (
     <>

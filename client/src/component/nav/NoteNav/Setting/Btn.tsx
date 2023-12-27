@@ -1,10 +1,12 @@
 import React from "react";
+import Reminder from "../../../../features/reminder/reminder";
 import { IoSettingsSharp } from "react-icons/io5";
 import Popover from "@mui/material/Popover";
 import { deleteNote } from "../../../../features/SliceAddNote";
 import { useAppSelector, useAppDispatch } from "../../../../app/hooks";
 import axios from "../../../../api/axios";
 import useDeleteNote from "../../../../hooks/useDeleteNote";
+import { FaXmark } from "react-icons/fa6";
 
 const Btn = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +14,7 @@ const Btn = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
   const [confirmDelDiv, setConfirmDelDiv] = React.useState<Boolean>();
   let [count, setCount] = React.useState(0);
+  const [reminderDiv, setReminderDiv] = React.useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,13 +43,31 @@ const Btn = () => {
     deleteNoteOnServer(count);
   };
 
+  function handleReminderDiv(value: any) {
+    setReminderDiv(!value);
+  }
   return (
     <>
+      <div className="bg gray w-full relative z-20">
+        {reminderDiv ? (
+          <div>
+            <Reminder showReminderDiv={reminderDiv} />
+            <FaXmark
+              className="absolute right-4 top-4 text-4xl"
+              onClick={() => handleReminderDiv(reminderDiv)}
+            ></FaXmark>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+
       {console.log(confirmDelDiv)}
       <div className="text-4xl cursor-pointer" onClick={handleClick}>
         <IoSettingsSharp />
       </div>
       <Popover
+        className="z-10"
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -81,7 +102,10 @@ const Btn = () => {
               </div>
             </div>
           </div>
-          <div className="items-center px-4 py-2 rounded-md font-medium text-black bg-gray-100 hover:bg-gray-400 focus:ring-4 focus:ring-gray-400">
+          <div
+            className="items-center px-4 py-2 rounded-md font-medium text-black bg-gray-100 hover:bg-gray-400 focus:ring-4 focus:ring-gray-400"
+            onClick={() => handleReminderDiv(reminderDiv)}
+          >
             <span>set reminder</span>
           </div>
         </div>
