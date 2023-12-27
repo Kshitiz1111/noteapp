@@ -21,7 +21,6 @@ const CreateSchedule = ({ socket }: any) => {
     });
     //👇🏻 shows toast notifications
     toast.success(`${activeNote?.title} is successfully added!`);
-    //save reminder globally
   };
 
   var yesterday = moment().subtract(1, "day");
