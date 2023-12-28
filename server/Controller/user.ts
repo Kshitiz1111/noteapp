@@ -143,7 +143,7 @@ export const refreshTokenController: RequestHandler = async (req, res) => {
       const accessToken = sign(
         { username: decoded.username },
         process.env.ACCESS_TOKEN_SECRET ?? "",
-        { expiresIn: "10s" }
+        { expiresIn: "10m" }
       );
 
       return res.json({ accessToken: accessToken, userName: foundUser.u_name });

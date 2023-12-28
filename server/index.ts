@@ -42,16 +42,15 @@ socketIO.on("connection", (socket) => {
 
   //event listener for new events
   socket.on("newEvent", (event) => {
-    eventList.unshift(event);
-    socket.emit("sendSchedules", eventList);
+    if (eventList.length !== 0 && eventList.id !== event.id) {
+      eventList.unshift(event);
+      socket.emit("sendSchedules", eventList);
+    } else if (eventList.length == 0) {
+      eventList.unshift(event);
+      socket.emit("sendSchedules", eventList);
+    }
   });
-
-  /*
-    The code snippet loops through the event list 
-    and checks if it's time for any event 
-    before sending a message containing 
-    the event details to the React app
-    */
+  console.log(eventList);
 
   let interval = setInterval(function () {
     if (eventList.length > 0) {
@@ -63,6 +62,7 @@ socketIO.on("connection", (socket) => {
           socket.emit("notification", {
             id: eventList[i].id,
             title: eventList[i].title,
+            reason: eventList[i].reason,
             time: eventList[i].time,
           });
           eventList = eventList.filter((item: any, index: any) => {
@@ -70,7 +70,6 @@ socketIO.on("connection", (socket) => {
           });
         }
       }
-      // console.log(eventList);
     }
   }, 1000);
 

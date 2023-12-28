@@ -7,6 +7,7 @@ import { stat } from "fs";
 interface Notification {
   id: string | null;
   title: string | null;
+  reason: string | null;
   initTime: string | null;
 }
 interface Notifications {
@@ -26,7 +27,7 @@ export const Reminder = createSlice({
   initialState,
   reducers: {
     setNotif: (state, action) => {
-      const { id, title, initTime } = action.payload;
+      const { id, title, reminderReason, initTime } = action.payload;
       console.log("from notif slice");
       console.log(id, title, initTime);
 
@@ -42,6 +43,7 @@ export const Reminder = createSlice({
         state.notifContent?.unshift({
           id: id,
           title: title,
+          reason: reminderReason,
           initTime: initTime,
         });
         state.totalNotif = state.notifContent?.length;

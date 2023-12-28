@@ -48,7 +48,12 @@ const Reminder: React.FC<ReminderProps> = ({ showReminderDiv }) => {
     socket.on("notification", (data: any) => {
       toast.success(` It's time for ${data.title}`);
       dispatch(
-        setNotif({ id: data.id, title: data.title, initTime: data.time })
+        setNotif({
+          id: data.id,
+          title: data.title,
+          reminderReason: data.reason,
+          initTime: data.time,
+        })
       );
       console.log(`server notif data: ${JSON.stringify(data)}`);
     });

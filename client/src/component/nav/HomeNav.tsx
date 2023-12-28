@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Popover from "@mui/material/Popover";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
+import { FaClipboardList } from "react-icons/fa6";
 
 const HomeNav = () => {
   const navToggleStatus = useAppSelector((state) => state.toggleStatus.status);
@@ -65,7 +66,7 @@ const HomeNav = () => {
             onClick={handleNotifClick}
           >
             {notifCount !== 0 ? (
-              <span className="absolute absolute top-0 left-0 -mt-3 -ml-3 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-bold">
+              <span className="absolute top-0 left-0 -mt-3 -ml-3 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-bold">
                 {notifCount}
               </span>
             ) : (
@@ -90,12 +91,19 @@ const HomeNav = () => {
           >
             {notifCount !== 0 ? (
               <div className="rounded-lg overflow-hidden shadow-md bg-white">
-                <span className="text-sm px-4">select note form tabbar</span>
+                <span className="flex text-sm px-4">
+                  <FaClipboardList className="mt-1 ml-1 mr-1 text-black text-md" />{" "}
+                  to review
+                </span>
+
                 <ul className="divide-y divide-gray-200">
                   {notifications.notifContent?.map((item) => (
-                    <li key={item.id} className="py-2 px-6 hover:bg-gray-100">
-                      <span className="block font-medium text-gray-900">
+                    <li key={item.id} className="py-2 px-2 hover:bg-gray-100">
+                      <span className="block text-xl m-0 font-semibold text-gray-900">
                         {item.title}
+                      </span>
+                      <span className="block text-sm ml-2 -mt-1 text-gray-400">
+                        {item.reason}
                       </span>
                     </li>
                   ))}

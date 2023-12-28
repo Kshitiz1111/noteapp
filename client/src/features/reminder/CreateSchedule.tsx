@@ -9,6 +9,7 @@ import shortUUID from "short-uuid";
 
 const CreateSchedule = ({ socket }: any) => {
   const [tvalue, setValue] = useState(new Date());
+  const [reminderReason, setReminderReason] = useState();
   const activeNote = useAppSelector((state) => state.getNotes?.activeNote);
 
   const handleSubmit = (e: any) => {
@@ -17,6 +18,7 @@ const CreateSchedule = ({ socket }: any) => {
     socket.emit("newEvent", {
       id: shortUUID.uuid(),
       title: activeNote?.title,
+      reason: reminderReason,
       time: timeString,
     });
     //👇🏻 shows toast notifications
@@ -33,6 +35,10 @@ const CreateSchedule = ({ socket }: any) => {
     disabled: false,
     // onMouseLeave: () => alert('schedule save')
   };
+  function handleReminderDescription(e: any) {
+    console.log(e.currentTarget.value);
+    setReminderReason(e.currentTarget.value);
+  }
 
   return (
     <div className="">
@@ -62,9 +68,15 @@ const CreateSchedule = ({ socket }: any) => {
         }}
         isValidDate={valid}
       />
-      <br />
+
+      <span className="text-lg font-semibold">Reminder Description</span>
+      <input
+        type="text"
+        className="m-1 p-2 rounded-full border border-black"
+        onChange={(e) => handleReminderDescription(e)}
+      />
       <form onSubmit={handleSubmit}>
-        <button className="bg-black text-white mb-4  py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
+        <button className="bg-black text-white mb-4 mt-6 py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
           save reminder
         </button>
       </form>
