@@ -1,6 +1,6 @@
 import React from "react";
-import { FaEdit } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
+// import { FaEdit } from "react-icons/fa";
+// import { FaCheckCircle } from "react-icons/fa";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setActiveNote } from "../SliceAddNote";
 
@@ -19,7 +19,7 @@ const RecentTab = () => {
         notes.map((note, index) => {
           return (
             <div
-              className={`relative w-fit p-3 bg-gray-400 rounded-2xl ${
+              className={`relative min-w-fit p-3 bg-gray-400 rounded-2xl ${
                 note.id === activeNote?.id ? "border-2 border-black" : ""
               }`}
               onClick={() => handleActiveNote(note)}

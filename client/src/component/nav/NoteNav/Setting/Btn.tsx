@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from "../../../../app/hooks";
 import axios from "../../../../api/axios";
 import useDeleteNote from "../../../../hooks/useDeleteNote";
 import { FaXmark } from "react-icons/fa6";
+import { setReminderDisplay } from "../../../../features/SliceReminder";
 
 const Btn = () => {
   const dispatch = useAppDispatch();
@@ -45,13 +46,14 @@ const Btn = () => {
 
   function handleReminderDiv(value: any) {
     setReminderDiv(!value);
+    setReminderDisplay(!value);
   }
   return (
     <>
       <div className="bg gray w-full relative z-20">
         {reminderDiv ? (
           <div>
-            <Reminder showReminderDiv={reminderDiv} />
+            <Reminder />
             <FaXmark
               className="absolute right-4 top-4 text-4xl"
               onClick={() => handleReminderDiv(reminderDiv)}

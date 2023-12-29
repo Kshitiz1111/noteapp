@@ -14,11 +14,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 const socket = io("http://localhost:4001");
 
-interface ReminderProps {
-  showReminderDiv: boolean;
-}
-
-const Reminder: React.FC<ReminderProps> = ({ showReminderDiv }) => {
+const Reminder = () => {
   const [schedules, setSchedules] = React.useState([]);
   const loggedUser = useAppSelector((state) => state.userAuth?.name);
   const activeNote = useAppSelector((state) => state.getNotes?.activeNote);

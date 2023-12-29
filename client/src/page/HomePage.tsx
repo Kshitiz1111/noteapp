@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { insertSavedNotes } from "../features/SliceAddNote";
 import axios from "../api/axios";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
+import Reminder from "../features/reminder/reminder";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector((state) => state.userAuth?.name);
+  const ReminderDisplay = useAppSelector((state) => state.getNotif.reminderDiv);
 
   const notes = useAppSelector((state) => state.getNotes.notes);
 

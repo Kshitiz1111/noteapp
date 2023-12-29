@@ -13,12 +13,14 @@ interface Notification {
 interface Notifications {
   notifContent: Notification[] | null;
   totalNotif: number | undefined;
+  reminderDiv: boolean;
 }
 
 // Define the initial state using that type
 const initialState: Notifications = {
   notifContent: [],
   totalNotif: 0,
+  reminderDiv: false,
 };
 
 export const Reminder = createSlice({
@@ -50,10 +52,13 @@ export const Reminder = createSlice({
         console.log(state.notifContent);
       }
     },
+    setReminderDisplay: (state, action) => {
+      state.reminderDiv = action.payload;
+    },
     removeNotif: (state, action) => {},
   },
 });
 
-export const { setNotif, removeNotif } = Reminder.actions;
+export const { setNotif, removeNotif, setReminderDisplay } = Reminder.actions;
 
 export default Reminder.reducer;

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Read = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   const activeNote = useAppSelector((state) => state.getNotes.activeNote);
 
   const homeNotes = useAppSelector((state) =>
@@ -17,14 +17,10 @@ const Read = () => {
     )
   );
 
- 
-
   function handleActiveNote(note: any) {
     dispatch(setActiveNote({ type: "homenote", payload: note }));
     navigate("/addnew");
   }
-
-
 
   return (
     <>
@@ -67,7 +63,7 @@ const Read = () => {
               </div>
               {/* <span className='text-xs text-gray-600'>science/medical/biology</span> */}
             </div>
-            <div>
+            <div className="overflow-x-hidden">
               <p>{note?.body}</p>
             </div>
           </div>
