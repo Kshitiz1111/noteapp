@@ -208,7 +208,7 @@ const Register = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={(e) => handleRegister(e)}
               disabled={!validName || !validPwd ? true : false}
-              style={{ background: "black" }}
+              style={{ background: "black", color: "white" }}
             >
               Register
             </Button>

@@ -30,11 +30,6 @@ const CreateSchedule = ({ socket }: any) => {
     return current.isAfter(yesterday);
   };
 
-  let inputProps = {
-    placeholder: "click to pick date and time",
-    disabled: false,
-    // onMouseLeave: () => alert('schedule save')
-  };
   function handleReminderDescription(e: any) {
     console.log(e.currentTarget.value);
     setReminderReason(e.currentTarget.value);

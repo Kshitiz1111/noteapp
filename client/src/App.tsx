@@ -9,6 +9,9 @@ import Missing from "./component/Missing";
 import AuthRequire from "./component/AuthRequired";
 import Temp from "./component/Temp";
 import PersistLogin from "./component/PersistLogin";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4001");
 
 function App() {
   return (
