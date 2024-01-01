@@ -2,7 +2,7 @@ import React from "react";
 // import Clock from "Clock";
 import CreateSchedule from "./CreateSchedule";
 import Schedules from "./Schedules";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 //React Toastify imports
 import "react-toastify/dist/ReactToastify.css";
@@ -11,13 +11,14 @@ import { ToastContainer, toast } from "react-toastify";
 // import { getTokenFromFirebase, onMessageListener } from "./firebase";
 import { removeNotif, setNotif } from "../SliceReminder";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
-const socket = io("http://localhost:4001");
+import { useSocket } from "../../hooks/SocketContext";
 
 const Reminder = () => {
+  let audio = new Audio("/livechat.mp3");
   const [schedules, setSchedules] = React.useState([]);
   const loggedUser = useAppSelector((state) => state.userAuth?.name);
   const activeNote = useAppSelector((state) => state.getNotes?.activeNote);
+  const socket = useSocket();
 
   const dispatch = useAppDispatch();
   //   React.useEffect(() => {
@@ -37,21 +38,22 @@ const Reminder = () => {
 
   React.useEffect(() => {
     //listens for the event list from the backend
-    socket.on("sendSchedules", (schedules) => {
+    socket?.on("sendSchedules", (schedules) => {
       setSchedules(schedules);
     });
     //Listens for the notification from the server
-    socket.on("notification", (data: any) => {
-      toast.success(` It's time for ${data.title}`);
+    socket?.on("notification", (data: any) => {
+      // toast.success(` It's time for ${data.title}`);
       dispatch(
         setNotif({
           id: data.id,
           title: data.title,
           reminderReason: data.reason,
-          initTime: data.time,
+          time: data.time,
         })
       );
-      console.log(`server notif data: ${JSON.stringify(data)}`);
+      console.log("hello notification ");
+      audio.play();
     });
   }, [schedules]);
 

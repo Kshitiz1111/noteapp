@@ -9,36 +9,39 @@ import Missing from "./component/Missing";
 import AuthRequire from "./component/AuthRequired";
 import Temp from "./component/Temp";
 import PersistLogin from "./component/PersistLogin";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
+import { SocketContext } from "./hooks/SocketContext";
 
 const socket = io("http://localhost:4001");
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+    <SocketContext.Provider value={socket}>
+      <div>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/register" element={<Register />}></Route>
 
-          {/* all the protected routes */}
-          <Route element={<PersistLogin />}>
-            <Route element={<AuthRequire />}>
-              <Route path="/" element={<HomePage />}></Route>
+            {/* all the protected routes */}
+            <Route element={<PersistLogin />}>
+              <Route element={<AuthRequire />}>
+                <Route path="/" element={<HomePage />}></Route>
+              </Route>
+              <Route element={<AuthRequire />}>
+                <Route path="/addnew" element={<NoteContainer />}></Route>
+              </Route>
+              <Route element={<AuthRequire />}>
+                <Route path="/admin" element={<Temp />}></Route>
+              </Route>
             </Route>
-            <Route element={<AuthRequire />}>
-              <Route path="/addnew" element={<NoteContainer />}></Route>
-            </Route>
-            <Route element={<AuthRequire />}>
-              <Route path="/admin" element={<Temp />}></Route>
-            </Route>
+
+            {/* catch all path */}
+            <Route path="*" element={<Missing />} />
           </Route>
-
-          {/* catch all path */}
-          <Route path="*" element={<Missing />} />
-        </Route>
-      </Routes>
-    </div>
+        </Routes>
+      </div>
+    </SocketContext.Provider>
   );
 }
 

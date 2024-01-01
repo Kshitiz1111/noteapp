@@ -32,11 +32,11 @@ export const AddNote = createSlice({
   initialState,
   reducers: {
     saveNoteLocally: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
     },
     setActiveNote: (state, action) => {
       //comeback and reduce code redundency
-      console.log(action.payload);
+      // console.log(action.payload);
       if (action.payload.type === "tab") {
         state.activeNote?.id !== action.payload.payload.id
           ? (state.activeNote = action.payload.payload)
@@ -72,24 +72,24 @@ export const AddNote = createSlice({
           lastModified: n_lastModified,
         });
       }
-      console.log(JSON.stringify(state.notes));
+      // console.log(JSON.stringify(state.notes));
     },
     deleteNote: (state, action) => {
-      console.log(`before: ${JSON.stringify(state.notes)}`);
+      // console.log(`before: ${JSON.stringify(state.notes)}`);
       let prevLen = state.notes.length;
       state.notes = state.notes.filter((note) => note.id !== action.payload);
-      console.log(`after: ${JSON.stringify(state.notes)}`);
+      // console.log(`after: ${JSON.stringify(state.notes)}`);
     },
     emptyNoteAfterLogout: (state, action) => {
-      console.log(`before: ${JSON.stringify(state.notes)}`);
+      // console.log(`before: ${JSON.stringify(state.notes)}`);
       state.notes = [];
-      console.log(`after: ${JSON.stringify(state.notes)}`);
+      // console.log(`after: ${JSON.stringify(state.notes)}`);
     },
     insertSavedNotes: (state, action) => {
       const { note, user } = action.payload;
       state.user = user;
       const serverResponseNotes = JSON.parse(note);
-      console.log(serverResponseNotes);
+      // console.log(serverResponseNotes);
       if (serverResponseNotes) {
         serverResponseNotes?.map((singleNote: any) => {
           // If the note doesn't exist, add it

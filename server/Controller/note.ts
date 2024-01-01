@@ -24,7 +24,7 @@ export const getNotes: RequestHandler = async (req, res, next) => {
       note: "",
     });
     let result = await note.getUserNotes(req.params.user);
-    console.log(`got note: ${JSON.stringify(result)}`);
+    // console.log(`got note: ${JSON.stringify(result)}`);
     return res.status(200).json(result?.u_notes);
   } catch (error) {
     console.error(error);
@@ -36,10 +36,10 @@ export const getNotes: RequestHandler = async (req, res, next) => {
 export const delNote: RequestHandler = async (req, res, next) => {
   let reqObj = req.body;
   try {
-    console.log(`user: ${JSON.stringify(req.params.user)}`);
+    // console.log(`user: ${JSON.stringify(req.params.user)}`);
     let note = new Notes(reqObj);
     let result = await note.del();
-    console.log(`deleted note: ${JSON.stringify(result)}`);
+    // console.log(`deleted note: ${JSON.stringify(result)}`);
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);

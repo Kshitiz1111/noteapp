@@ -8,7 +8,7 @@ interface Notification {
   id: string | null;
   title: string | null;
   reason: string | null;
-  initTime: string | null;
+  time: string | null;
 }
 interface Notifications {
   notifContent: Notification[] | null;
@@ -29,9 +29,9 @@ export const Reminder = createSlice({
   initialState,
   reducers: {
     setNotif: (state, action) => {
-      const { id, title, reminderReason, initTime } = action.payload;
+      const { id, title, reminderReason, time } = action.payload;
       console.log("from notif slice");
-      console.log(id, title, initTime);
+      console.log(id, title, time);
 
       let notifIndex = state.notifContent?.findIndex(
         (notif) => notif.id === id
@@ -46,7 +46,7 @@ export const Reminder = createSlice({
           id: id,
           title: title,
           reason: reminderReason,
-          initTime: initTime,
+          time: time,
         });
         state.totalNotif = state.notifContent?.length;
         console.log(state.notifContent);
@@ -55,7 +55,21 @@ export const Reminder = createSlice({
     setReminderDisplay: (state, action) => {
       state.reminderDiv = action.payload;
     },
-    removeNotif: (state, action) => {},
+    removeNotif: (state, action) => {
+      let newArr = state.notifContent?.filter(
+        (item) => item.id !== action.payload.id
+      );
+      if (newArr == undefined) {
+        console.log("newArra is undefined");
+      } else {
+        state.notifContent = newArr;
+        if (state.totalNotif) {
+          --state.totalNotif;
+        } else {
+          console.log("totalnotif in undefined");
+        }
+      }
+    },
   },
 });
 

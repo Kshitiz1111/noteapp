@@ -14,6 +14,7 @@ type noteType = {
   initialTime: number;
   lastModified: string | undefined;
 };
+
 const NoteContainer = () => {
   const [header, setHeader] = React.useState<string>("");
   const [content, setContent] = React.useState<string>("");

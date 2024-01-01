@@ -118,9 +118,9 @@ export const refreshTokenController: RequestHandler = async (req, res) => {
   let reqObj: userInfoType = req.body;
   let user = new User(reqObj);
   const cookie = req.cookies;
-  console.log(
-    `this is cookie( from refresh token): ${JSON.stringify(req.cookies)}`
-  );
+  // console.log(
+  //   `this is cookie( from refresh token): ${JSON.stringify(req.cookies)}`
+  // );
 
   if (!cookie?.jwt) return res.sendStatus(401);
 
@@ -163,14 +163,14 @@ export const logoutUserController: RequestHandler = async (req, res) => {
     let user = new User(reqObj);
 
     const cookie = req.cookies;
-    console.log(`this is cookie(logout): ${JSON.stringify(req.cookies)}`);
+    // console.log(`this is cookie(logout): ${JSON.stringify(req.cookies)}`);
     //here return res.sendS..
     if (!cookie?.jwt) return res.sendStatus(204); //no content
     const refreshToken = cookie.jwt;
-    console.log("hhhh");
+    // console.log("hhhh");
     //check if there is refresh token in db
     const existingUsers = await user.getAllUser();
-    console.log(`existing users: ${JSON.stringify(existingUsers)}`);
+    // console.log(`existing users: ${JSON.stringify(existingUsers)}`);
     const foundUser = existingUsers.find(
       (person) => person.u_rftk === refreshToken
     );

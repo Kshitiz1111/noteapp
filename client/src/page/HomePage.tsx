@@ -16,7 +16,7 @@ const HomePage = () => {
   const loggedUser = useAppSelector((state) => state.userAuth?.name);
   const ReminderDisplay = useAppSelector((state) => state.getNotif.reminderDiv);
 
-  const notes = useAppSelector((state) => state.getNotes.notes);
+  const notes = useAppSelector((state) => state.getNotes.notes.length);
 
   const getNotesFromServer = async () => {
     try {

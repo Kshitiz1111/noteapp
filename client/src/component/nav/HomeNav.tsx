@@ -7,6 +7,7 @@ import Popover from "@mui/material/Popover";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { FaClipboardList } from "react-icons/fa6";
+import { removeNotif } from "../../features/SliceReminder";
 
 const HomeNav = () => {
   const navToggleStatus = useAppSelector((state) => state.toggleStatus.status);
@@ -90,24 +91,29 @@ const HomeNav = () => {
             }}
           >
             {notifCount !== 0 ? (
-              <div className="rounded-lg overflow-hidden shadow-md bg-white">
-                <span className="flex text-sm px-4">
-                  <FaClipboardList className="mt-1 ml-1 mr-1 text-black text-md" />{" "}
-                  to review
-                </span>
-
-                <ul className="divide-y divide-gray-200">
-                  {notifications.notifContent?.map((item) => (
-                    <li key={item.id} className="py-2 px-2 hover:bg-gray-100">
-                      <span className="block text-xl m-0 font-semibold text-gray-900">
-                        {item.title}
-                      </span>
-                      <span className="block text-sm ml-2 -mt-1 text-gray-400">
-                        {item.reason}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="rounded-lg overflow-hidden bg-white max-w-xs mx-auto my-2">
+                <div className="px-6 py-1">
+                  <h2 className="text-lg font-bold text-gray-700">reminder</h2>
+                  <ul className="mt-2">
+                    {notifications.notifContent?.map((item) => (
+                      <li
+                        key={item.id}
+                        className="px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-200"
+                        onClick={() => dispatch(removeNotif({ id: item.id }))}
+                      >
+                        <span className="text-xs text-gray-700 block">
+                          at: {item.time}
+                        </span>
+                        <span className="font-semibold text-gray-700 block">
+                          Note Title: {item.title}
+                        </span>
+                        <span className="text-sm text-gray-500 block">
+                          Reason: {item.reason}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ) : (
               <div className="p-4">no notification</div>

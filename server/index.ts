@@ -50,7 +50,6 @@ socketIO.on("connection", (socket) => {
       socket.emit("sendSchedules", eventList);
     }
   });
-  console.log(eventList);
 
   let interval = setInterval(function () {
     if (eventList.length > 0) {
@@ -69,6 +68,7 @@ socketIO.on("connection", (socket) => {
             return item.id !== eventList[i].id;
           });
         }
+        console.log(eventList);
       }
     }
   }, 1000);
