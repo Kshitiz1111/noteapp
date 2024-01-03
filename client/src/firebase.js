@@ -1,6 +1,8 @@
 import {initializeApp} from 'firebase/app';
 import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 
+
+
 var firebaseConfig = {
    apiKey: "AIzaSyApia1IEJjGTHNqnbper6FY_Z-JavNbWsk",
    authDomain: "manage-notification-745f1.firebaseapp.com",
@@ -15,7 +17,6 @@ initializeApp(firebaseConfig);
 const messaging = getMessaging();
 
 
-
 export const requestForToken = ()=>{
    return getToken(messaging, {vapidKey: 'BEd6EXmBoR2Bvh6ZZx8wBfxYWuoi4TcQ_JTkm63Yk1UoSKl5_4YU0VeZ6tGCybSLQlYCXv21180oVnyt5-l-hiU'})
       .then((currentToken) => {
@@ -23,6 +24,7 @@ export const requestForToken = ()=>{
             console.log('current token for client', currentToken);
          }else{
             console.log('no registration token avaiable. Request persmission to generate one. ')
+            
          }
       })
       .catch((err)=>{

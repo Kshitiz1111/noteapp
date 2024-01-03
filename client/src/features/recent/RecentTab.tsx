@@ -14,13 +14,13 @@ const RecentTab = () => {
   const activeNote = useAppSelector((state) => state.getNotes.activeNote);
 
   return (
-    <div className="flex gap-2 w-3/4 ">
+    <div className="flex gap-2 w-3/4 p-2">
       {notes ? (
         notes.map((note, index) => {
           return (
             <div
               className={`relative min-w-fit p-3 bg-gray-400 rounded-2xl ${
-                note.id === activeNote?.id ? "border-2 border-black" : ""
+                note.id === activeNote?.id ? "outline outline-2 outline-black" : ""
               }`}
               onClick={() => handleActiveNote(note)}
             >

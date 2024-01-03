@@ -24,6 +24,7 @@ const Btn = () => {
   const handleClose = () => {
     setAnchorEl(null);
     setCount(0);
+    setConfirmDelDiv(false);
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -55,7 +56,7 @@ const Btn = () => {
           <div>
             <Reminder />
             <FaXmark
-              className="absolute right-4 top-4 text-4xl"
+              className="cursor-pointer absolute right-4 top-4 text-4xl"
               onClick={() => handleReminderDiv(reminderDiv)}
             ></FaXmark>
           </div>
@@ -92,15 +93,15 @@ const Btn = () => {
             <div
               className={`${
                 confirmDelDiv ? "block" : "hidden"
-              } absolute top-0 left-0 cursor-pointer hover:bg-gray-100 text-sm font-semibold rounded-md px-3 py-2`}
+              } absolute top-0 left-0 cursor-pointer bg-white text-sm font-semibold rounded-md px-3 py-2`}
             >
               <div
                 className={`${
                   confirmDelDiv ? "block" : "hidden"
-                } mb-2 items-center px-4 py-2 rounded-md font-medium text-green-700 bg-green-100 hover:bg-green-200 focus:ring-4 focus:ring-green-300`}
+                }w-full h-full mb-2 items-center px-4 py-2 rounded-md font-medium text-white bg-red-600 `}
                 onClick={() => handleConfirmDelete()}
               >
-                are you sure
+               <span> are you sure</span>
               </div>
             </div>
           </div>

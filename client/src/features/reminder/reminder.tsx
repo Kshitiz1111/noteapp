@@ -61,7 +61,7 @@ const Reminder = () => {
     <div className="absolute bg-gray-300 p-5 top-0 right-0 left-0 shadow-lg rounded-lg">
       {/* <Clock /> */}
       <CreateSchedule socket={socket} />
-      <Schedules schedules={schedules} />
+      {/* <Schedules schedules={schedules} /> */}
       <ToastContainer />
     </div>
   );

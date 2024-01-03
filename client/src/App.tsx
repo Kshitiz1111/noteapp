@@ -22,7 +22,7 @@ function App() {
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
         console.log("notification permission granted.");
-        requestForToken();
+         requestForToken();
       } else {
         console.log("notification permission not granted");
       }

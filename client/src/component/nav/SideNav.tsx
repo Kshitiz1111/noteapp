@@ -23,7 +23,7 @@ const SideNav = () => {
   return (
     <div className="flex ">
       <div className="overflow-y-scroll w-full h-screen sm:w-80 fixed top-0 left-0 bg-gray-600 pb-4 pt-0 z-10">
-        <div className="fixed top-0 left-0 right-0 bg-gray-600 text-4xl flex justify-between px-4 py-2">
+        <div className="fixed top-0 left-0 right-0 bg-gray-600 text-4xl flex justify-between p-6">
           <span className="text-gray-400">notes</span>
           <FaXmark onClick={() => dispatch(toggle(navToggleStatus))}></FaXmark>
         </div>

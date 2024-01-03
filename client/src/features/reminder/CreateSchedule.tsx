@@ -38,8 +38,15 @@ const CreateSchedule = ({ socket }: any) => {
   return (
     <div className="">
       <div className="flex justify-between">
-        <h2 className="text-2xl font-semibold mb-4">Create a Schedule</h2>
+        <h2 className="text-2xl font-semibold mb-4">Schedule Reminder</h2>
       </div>
+      <span className="text-lg font-semibold">Reminder Description</span>
+      <input
+        type="text"
+        className="m-1 p-2 rounded-full border border-black"
+        onChange={(e) => handleReminderDescription(e)}
+      />
+      <br />
       <span className="text-lg font-semibold">pick date and time</span>
       <Datetime
         inputProps={{
@@ -64,12 +71,7 @@ const CreateSchedule = ({ socket }: any) => {
         isValidDate={valid}
       />
 
-      <span className="text-lg font-semibold">Reminder Description</span>
-      <input
-        type="text"
-        className="m-1 p-2 rounded-full border border-black"
-        onChange={(e) => handleReminderDescription(e)}
-      />
+      
       <form onSubmit={handleSubmit}>
         <button className="bg-black text-white mb-4 mt-6 py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
           save reminder

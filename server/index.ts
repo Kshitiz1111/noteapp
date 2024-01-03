@@ -14,9 +14,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { corsOptions } from "./Config/corsOptions";
 //firebase
-import admin from "firebase-admin";
-import { applicationDefault } from "firebase-admin/app";
-import path from "path";
+// import admin from "firebase-admin";
+// import { applicationDefault } from "firebase-admin/app";
+// import path from "path";
 //firebase
 
 //all routers object in between
@@ -28,12 +28,11 @@ const logger = require("morgan");
 const app: Application = express();
 
 //firebase
-const serviceAccount = require(path.resolve(__dirname,
-  "../manage-notification-745f1-firebase-adminsdk-a834y-18bcde19ad.json"
-));
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+
+// admin.initializeApp({
+//   credential: applicationDefault(),
+// });
+
 //firebase
 
 //Middleware
@@ -86,27 +85,27 @@ socketIO.on("connection", (socket) => {
             time: eventList[i].time,
           });
           //firebase
-          const message = {
-            notification: {
-              title: eventList[i].title,
-              body: eventList[i].reason,
-            },
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbWUiLCJpYXQiOjE3MDQyNjg4MTcsImV4cCI6MTcwNDI2ODgyN30.om8iney4TNQfIsTEcLIG-XS972U9x1Rmx32OVyAk7YE",
-          };
+          // const message = {
+          //   notification: {
+          //     title: eventList[i].title,
+          //     body: eventList[i].reason,
+          //   },
+          //   token:
+          //     "dfAHmWl2p--CqX7_u5Jsuv:APA91bGrccE2sK77B_c220ECdBmhMK5w0p2-bXRFuf3ftdCu_ecciyANtiYCA1LLwBb_2N8MEnfpRFfcmPyDgXWSCn9R2BZTSP5Gm7--unr55L3zZnSg7ooDAPDVQV62feyAgFrsqRoD",
+          // };
 
-          function sendPushNotification(message: any) {
-            admin
-              .messaging()
-              .send(message)
-              .then((response) => {
-                console.log("successfully send message:", response);
-              })
-              .catch((error) => {
-                console.log("error sending message:", error);
-              });
-          }
-          sendPushNotification(message);
+          // function sendPushNotification(message: any) {
+          //   admin
+          //     .messaging()
+          //     .send(message)
+          //     .then((response) => {
+          //       console.log("successfully send message:", response);
+          //     })
+          //     .catch((error) => {
+          //       console.log("error sending message:", error);
+          //     });
+          // }
+          // sendPushNotification(message);
           //firebase
           eventList = eventList.filter((item: any, index: any) => {
             return item.id !== eventList[i].id;

@@ -7,6 +7,7 @@ interface userObj {
   name?: string | null;
   // pwd: string;
   accessToken: string | null;
+  fmcToken?: string | undefined;
   // role: "ADMIN" | "USER" | undefined;
 }
 
@@ -15,6 +16,7 @@ const initialState: userObj = {
   name: null,
   // pwd: "",
   accessToken: null,
+  fmcToken: undefined,
   // role: undefined,
 };
 
@@ -32,9 +34,12 @@ export const Auth = createSlice({
 
       console.log(`global userAuth: ${JSON.stringify(state)}`);
     },
+    setFmcToken:(state, action:any)=>{
+      state.fmcToken = action.fmcToken;
+    }
   },
 });
 
-export const { setAuth } = Auth.actions;
+export const { setAuth, setFmcToken } = Auth.actions;
 
 export default Auth.reducer;

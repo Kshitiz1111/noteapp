@@ -82,7 +82,7 @@ const HomeNav = () => {
             anchorEl={anchorElNotif}
             onClose={handleNotifClose}
             anchorOrigin={{
-              vertical: "center",
+              vertical: "bottom",
               horizontal: "center",
             }}
             transformOrigin={{
@@ -98,16 +98,16 @@ const HomeNav = () => {
                     {notifications.notifContent?.map((item) => (
                       <li
                         key={item.id}
-                        className="px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-200"
+                        className="px-2 py-1 rounded-lg border bg-gray-200 border-gray-600 mb-1 hover:cursor-pointer hover:bg-gray-100"
                         onClick={() => dispatch(removeNotif({ id: item.id }))}
                       >
-                        <span className="text-xs text-gray-700 block">
-                          at: {item.time}
+                        <span className="text-xs text-gray-400 block">
+                          AT: {item.time}
                         </span>
-                        <span className="font-semibold text-gray-700 block">
+                        <span className="font-semibold text-gray-800 block">
                           Note Title: {item.title}
                         </span>
-                        <span className="text-sm text-gray-500 block">
+                        <span className="text-sm text-gray-600 block">
                           Reason: {item.reason}
                         </span>
                       </li>
