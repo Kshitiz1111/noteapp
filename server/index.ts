@@ -1,4 +1,10 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, {
+  Application,
+  Request,
+  Response,
+  NextFunction,
+  response,
+} from "express";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import { Server } from "socket.io";
@@ -7,6 +13,12 @@ import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { corsOptions } from "./Config/corsOptions";
+//firebase
+import admin from "firebase-admin";
+import { applicationDefault } from "firebase-admin/app";
+import path from "path";
+//firebase
+
 //all routers object in between
 import userRouter from "./Router/user";
 import noteRouter from "./Router/note";
@@ -14,6 +26,15 @@ import noteRouter from "./Router/note";
 
 const logger = require("morgan");
 const app: Application = express();
+
+//firebase
+const serviceAccount = require(path.resolve(__dirname,
+  "../manage-notification-745f1-firebase-adminsdk-a834y-18bcde19ad.json"
+));
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+//firebase
 
 //Middleware
 const httpServer = http.createServer(app);
@@ -64,6 +85,29 @@ socketIO.on("connection", (socket) => {
             reason: eventList[i].reason,
             time: eventList[i].time,
           });
+          //firebase
+          const message = {
+            notification: {
+              title: eventList[i].title,
+              body: eventList[i].reason,
+            },
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbWUiLCJpYXQiOjE3MDQyNjg4MTcsImV4cCI6MTcwNDI2ODgyN30.om8iney4TNQfIsTEcLIG-XS972U9x1Rmx32OVyAk7YE",
+          };
+
+          function sendPushNotification(message: any) {
+            admin
+              .messaging()
+              .send(message)
+              .then((response) => {
+                console.log("successfully send message:", response);
+              })
+              .catch((error) => {
+                console.log("error sending message:", error);
+              });
+          }
+          sendPushNotification(message);
+          //firebase
           eventList = eventList.filter((item: any, index: any) => {
             return item.id !== eventList[i].id;
           });

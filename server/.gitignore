@@ -22,3 +22,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# firebase serviceAccount
+manage-notification-745f1-firebase-adminsdk-a834y-18bcde19ad.json

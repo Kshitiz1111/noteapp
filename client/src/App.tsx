@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomePage from "./page/HomePage";
 import { Routes, Route } from "react-router-dom";
 import NoteContainer from "./component/AddNewNote/NoteContainer";
@@ -11,10 +11,27 @@ import Temp from "./component/Temp";
 import PersistLogin from "./component/PersistLogin";
 import { io, Socket } from "socket.io-client";
 import { SocketContext } from "./hooks/SocketContext";
+import { requestForToken } from "./firebase";
 
 const socket = io("http://localhost:4001");
 
 function App() {
+  //ask user to allow notification
+  function requestPermission() {
+    console.log("Requesting Permission...");
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("notification permission granted.");
+        requestForToken();
+      } else {
+        console.log("notification permission not granted");
+      }
+    });
+  }
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
   return (
     <SocketContext.Provider value={socket}>
       <div>
